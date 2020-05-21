@@ -40,7 +40,7 @@ _#MySQL, MS SQL Server_
 SELECT DISTINCT(CITY)  
 FROM STATION  
 WHERE (ID%2) = 0; 
-_#Oracle_  
+_#Oracle_    
 SELECT DISTINCT(CITY)  
 FROM STATION  
 WHERE MOD(ID,2) = 0;  
@@ -54,3 +54,26 @@ FROM STATION;
 **Exercise 9** [Weather Observation Station 5](https://www.hackerrank.com/challenges/weather-observation-station-5/problem?h_r=next-challenge&h_v=zen)  
 Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths.  
 **Solution**  
+_MySQL_  
+SELECT CITY, LENGTH(CITY)   
+FROM STATION   
+ORDER BY LENGTH(CITY), CITY LIMIT 1;  
+SELECT CITY, LENGTH(CITY)  
+FROM STATION  
+ORDER BY LENGTH(CITY) DESC,CITY LIMIT 1;  
+
+**Exercise 10** [Weather Observation Station 6](https://www.hackerrank.com/challenges/weather-observation-station-6/problem)  
+Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.  
+**Solution**  
+_MS SQL Server_  
+SELECT CITY FROM STATION  
+WHERE CITY LIKE '[aeiou]%';    
+_MySQL_  
+SELECT CITY FROM STATION  
+WHERE CITY LIKE 'a%' OR CITY LIKE 'e%' OR CITY LIKE 'i%' OR CITY LIKE 'o%' OR CITY LIKE 'u%';  
+_Oracle_  
+SELECT CITY FROM STATION      
+WHERE CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR CITY LIKE 'U%';  
+  
+**Exercise 11**  
+

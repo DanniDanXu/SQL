@@ -87,7 +87,7 @@ SELECT DISTINCT CITY
 FROM STATION
 WHERE CITY LIKE '%[aeiou]';  
   
-**Exercise 12**[Weather Observation Station 8](https://www.hackerrank.com/challenges/weather-observation-station-8/problem)  
+**Exercise 12** [Weather Observation Station 8](https://www.hackerrank.com/challenges/weather-observation-station-8/problem)  
 Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.  
 **Solution**  
 _#MySQL_  
@@ -95,21 +95,21 @@ SELECT DISTINCT CITY
 FROM STATION  
 WHERE CITY RLIKE '[aeiou]$' AND CITY RLIKE '^[aeiou]';    
   
-**Exercise 13**[Weather Observation Station 9](https://www.hackerrank.com/challenges/weather-observation-station-9/problem)  
+**Exercise 13** [Weather Observation Station 9](https://www.hackerrank.com/challenges/weather-observation-station-9/problem)  
 Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.  
 **Solution**  
 SELECT DISTINCT(CITY) FROM STATION  
 WHERE CITY RLIKE '^[^aeiou]'  
 ORDER BY CITY 
   
-**Exercise 14**[Weather Observation Station 10](https://www.hackerrank.com/challenges/weather-observation-station-10/problem)  
+**Exercise 14** [Weather Observation Station 10](https://www.hackerrank.com/challenges/weather-observation-station-10/problem)  
 Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.  
 **Solution**  
 SELECT DISTINCT(CITY)  
 FROM STATION  
 WHERE CITY RLIKE '[^aeiou]$'; 
   
-**Exercise 15**[[Weather Observation Station 11](https://www.hackerrank.com/challenges/weather-observation-station-11/problem)  
+**Exercise 15** [Weather Observation Station 11](https://www.hackerrank.com/challenges/weather-observation-station-11/problem)  
 Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.  
 **Solution**  
 SELECT DISTINCT(CITY)  
@@ -117,7 +117,7 @@ FROM STATION
 WHERE CITY RLIKE '^[^aeiou]' OR CITY RLIKE '[^aeiou]$'  
 ORDER BY CITY;  
   
-**Exercise 16**[[Weather Observation Station 12](https://www.hackerrank.com/challenges/weather-observation-station-12/problem)
+**Exercise 16** [Weather Observation Station 12](https://www.hackerrank.com/challenges/weather-observation-station-12/problem)
 Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.  
 **Solution**  
 SELECT DISTINCT(CITY)  
@@ -125,20 +125,20 @@ FROM STATION
 WHERE CITY RLIKE '^[^aeiou]' AND CITY RLIKE '[^aeiou]$'  
 ORDER BY CITY;  
   
-**Exercise 17**[Higher Than 75 Marks](https://www.hackerrank.com/challenges/more-than-75-marks/problem)  
+**Exercise 17** [Higher Than 75 Marks](https://www.hackerrank.com/challenges/more-than-75-marks/problem)  
 Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.  
 **Solution**  
 SELECT NAME FROM STUDENTS  
 WHERE MARKS > 75  
 ORDER BY RIGHT(NAME,3), ID;  
   
-**Exercise 18**[Employee Names](https://www.hackerrank.com/challenges/name-of-employees/problem)  
+**Exercise 18** [Employee Names](https://www.hackerrank.com/challenges/name-of-employees/problem)  
 Write a query that prints a list of employee names (i.e.: the name attribute) from the Employee table in alphabetical order.  
 **Solution**  
 SELECT NAME FROM EMPLOYEE  
 ORDER BY NAME;  
   
-**Exercise 19**[Employee Salaries](https://www.hackerrank.com/challenges/salary-of-employees/problem)  
+**Exercise 19** [Employee Salaries](https://www.hackerrank.com/challenges/salary-of-employees/problem)  
 Write a query that prints a list of employee names (i.e.: the name attribute) for employees in Employee having a salary greater than  per month who have been employees for less than  months. Sort your result by ascending employee_id.  
 **Solution**  
 SELECT NAME FROM EMPLOYEE  

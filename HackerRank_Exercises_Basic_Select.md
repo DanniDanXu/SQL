@@ -21,7 +21,7 @@ _Query all columns for a city in CITY with the ID 1661._
 SELECT * FROM CITY  
 WHERE ID = 1661;  
   
-**Exercise 5 ** [Japanese Cities' Attributes](https://www.hackerrank.com/challenges/japanese-cities-attributes/problem)  
+**Exercise 5** [Japanese Cities' Attributes](https://www.hackerrank.com/challenges/japanese-cities-attributes/problem)  
 _Query all attributes of every Japanese city in the CITY table. The COUNTRYCODE for Japan is JPN._  
 **Solution**  
 SELECT * FROM CITY  

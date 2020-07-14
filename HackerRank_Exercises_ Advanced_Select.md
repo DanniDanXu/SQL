@@ -18,7 +18,10 @@ ORDER BY Name;
 SELECT CONCAT('There are a total of ', COUNT(Occupation),' ', LOWER(Occupation),'s.')   
 FROM OCCUPATIONS    
 GROUP BY Occupation   
-ORDER BY COUNT(Occupation)  
+ORDER BY COUNT(Occupation) 
+  
+**Exercise 3** [Occupations](https://www.hackerrank.com/challenges/occupations/problem)  
+
 
 
 

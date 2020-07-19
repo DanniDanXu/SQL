@@ -12,8 +12,8 @@ FROM CITY AS C
 JOIN COUNTRY AS CT ON CT.CODE = C.COUNTRYCODE  
 WHERE CT.CONTINENT = 'Africa'  
   
-**Exercise 3** [Average Population of Each Continent](https://www.hackerrank.com/challenges/average-population-of-each-continent) 
-_Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations_
+**Exercise 3** [Average Population of Each Continent](https://www.hackerrank.com/challenges/average-population-of-each-continent)   
+_Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city_ populations_
 *Solution*  
 SELECT CT.CONTINENT, FLOOR(AVG(C.POPULATION))  
 FROM COUNTRY AS CT    

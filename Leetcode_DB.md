@@ -16,7 +16,7 @@ BEGIN
  
 declare var int;
 SET var = N-1;
-RETURN (# Write your MySQL query statement below.
+RETURN (  
 SELECT  
     IFNULL(  
       (SELECT DISTINCT Salary  
@@ -114,7 +114,8 @@ WHERE TO_DAYS(w1.RecordDate) = TO_DAYS(w2.RecordDate) + 1
 AND w1.Temperature > w2.Temperature  
   
 **Exercise 13: 262. Trips and Users**  
-SELECT t.Request_at AS Day, ROUND((COUNT(*)-SUM(t.Status = 'completed'))/ COUNT(*),2) AS 'Cancellation Rate'   
+SELECT t.Request_at AS Day, ROUND((COUNT(*)-
+(t.Status = 'completed'))/ COUNT(*),2) AS 'Cancellation Rate'   
 FROM Trips t  
 JOIN   
 Users u ON u.Users_Id = t.Client_Id OR u.Users_Id = t.Driver_ID  
@@ -128,5 +129,54 @@ LEFT JOIN Users u2 ON u2.Users_Id = t.Client_Id
 WHERE u1.Banned = "No" AND u2.Banned = "No" AND t.Request_at Between "2013-10-01" AND "2013-10-03"  
 GROUP BY t.Request_at  
 ORDER BY t.Request_at  
+  
+**Exercise 14: 511. Game Play Analysis I**  
+SELECT player_id, MIN(event_date) as first_login
+FROM Activity  
+GROUP BY player_id   
+  
+**Exercise 15: 512. Game Play Analysis II**  
+SELECT a.player_id, a.device_id  
+FROM Activity a  
+INNER JOIN (SELECT player_id, MIN(event_date) AS event_date FROM Activity GROUP BY player_id) as f
+ON a.event_date = f.event_date AND a.player_id = f.player_id  
 
+**Exercise 16: 534. Game Play Analysis III**
+_MS SQL Server_  
+SELECT player_id, event_date,   
+       SUM(games_played) OVER(PARTITION BY player_id ORDER BY event_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS   games_played_so_far  
+FROM Activity  
+  
+**Exercise 17: 550. Game Play Analysis IV**  
+SELECT ROUND(f.cd/(COUNT(DISTINCT(Activity.player_id))),2) AS fraction   
+FROM Activity,   
+ (SELECT count(a.player_id) AS cd    
+  FROM Activity a  
+  INNER JOIN (SELECT M.player_id,DATE_ADD(M.event_date, INTERVAL 1 DAY) as event_date    
+                 FROM (SELECT player_id, MIN(event_date) as event_date FROM Activity GROUP BY player_id) AS M) as c
+  on c.event_date = a.event_date AND c.player_id = a.player_id) as f  
+  
+**Exercise 18: 569. Median Employee Salary**  
+_MS SQL Server_  
+select id,company,salary  
+from(select *,row_number() over (partition by company order by salary) as salary_order,count(salary)over(partition by company) as emp_num  
+from employee) tmp  
+where (emp_num%2 = 1 and salary_order= emp_num/2+1)  
+    or (emp_num%2=0 and (salary_order = emp_num/2 or salary_order=emp_num/2+1))  
 
+**Exercise 19: 570. Managers with at Least 5 Direct Reports**  
+SELECT NAME  
+FROM Employee  
+WHERE ID IN (SELECT ManagerId FROM Employee GROUP BY ManagerId  HAVING COUNT(ManagerId) >=5 )  
+_Faster Solution with Join_
+SELECT NAME  
+FROM Employee e   
+JOIN (SELECT ManagerId FROM Employee GROUP BY ManagerId  HAVING COUNT(ManagerId) >=5 ) f  
+ON f.ManagerId = e.Id  
+  
+**Exercise 20: 571. Find Median Given Frequency of Numbers**  
+SELECT ROUND(SUM(Number)/COUNT(Number),2)  AS median  
+FROM (SELECT Number, Frequency, SUM(Frequency) OVER (ORDER BY Number ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS s, SUM(Frequency) OVER() AS t  
+FROM Numbers ) AS tmp  
+where t/2 BETWEEN s- Frequency AND s  
+ 

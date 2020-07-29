@@ -179,4 +179,64 @@ SELECT ROUND(SUM(Number)/COUNT(Number),2)  AS median
 FROM (SELECT Number, Frequency, SUM(Frequency) OVER (ORDER BY Number ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS s, SUM(Frequency) OVER() AS t  
 FROM Numbers ) AS tmp  
 where t/2 BETWEEN s- Frequency AND s  
- 
+  
+**Exercise 21: 1179. Reformat Department Table**  
+_MS SQL Server_  
+SELECT Id, [Jan] AS [Jan_Revenue],[Feb] AS[Feb_Revenue],[Mar] AS [Mar_Revenue],[Apr] AS [Apr_Revenue],[May] AS [May_Revenue],[Jun] AS [Jun_Revenue],[Jul] AS [Jul_Revenue],[Aug] AS [Aug_Revenue],[Sep] AS [Sep_Revenue],[Oct] AS [Oct_Revenue],[Nov] AS [Nov_Revenue],[Dec] AS [Dec_Revenue]  
+FROM (SELECT id, month, revenue  
+FROM Department) AS src  
+PIVOT  
+(SUM(revenue) FOR [month] IN ([Jan],[Feb],[Mar],[Apr],[May],[Jun],[Jul],[Aug],[Sep],[Oct],[Nov],[Dec])) AS pvt  
+_MY SQL_  
+SELECT id,
+    SUM(IF(month = 'Jan', revenue, NULL)) AS Jan_Revenue,  
+    SUM(IF(month = 'Feb', revenue, NULL)) AS Feb_Revenue,  
+    SUM(IF(month = 'Mar', revenue, NULL)) AS Mar_Revenue,  
+    SUM(IF(month = 'Apr', revenue, NULL)) AS Apr_Revenue,  
+    SUM(IF(month = 'May', revenue, NULL)) AS May_Revenue,  
+    SUM(IF(month = 'Jun', revenue, NULL)) AS Jun_Revenue,  
+    SUM(IF(month = 'Jul', revenue, NULL)) AS Jul_Revenue,  
+    SUM(IF(month = 'Aug', revenue, NULL)) AS Aug_Revenue,  
+    SUM(IF(month = 'Sep', revenue, NULL)) AS Sep_Revenue,  
+    SUM(IF(month = 'Oct', revenue, NULL)) AS Oct_Revenue,  
+    SUM(IF(month = 'Nov', revenue, NULL)) AS Nov_Revenue,  
+    SUM(IF(month = 'Dec', revenue, NULL)) AS Dec_Revenue  
+FROM Department  
+GROUP BY id;  
+  
+**Exercise 22 597. Friend Requests I: Overall Acceptance Rate**  
+select  
+round(  
+    ifnull(  
+    (select count(*) from (select distinct requester_id, accepter_id from request_accepted) as A)  
+    /  
+    (select count(*) from (select distinct sender_id, send_to_id from friend_request) as B),  
+    0)  
+, 2) as accept_rate;  
+  
+**Exercise 23 1270. All People Report to the Given Manager**  
+SELECT employee_id FROM Employees
+WHERE manager_id IN (SELECT employee_id FROM Employees 
+WHERE manager_id IN (SELECT employee_id FROM Employees WHERE manager_id = 1)) AND manager_id <>1
+
+**Exercise 24 1212. Team Scores in Football Tournament**  
+SELECT t.team_id, t.team_name, IFNULL(SUM(num_points),0) AS num_points    
+FROM Teams t  
+LEFT JOIN (SELECT host_team,  
+       SUM(CASE  
+       WHEN host_goals > guest_goals THEN 3  
+       WHEN host_goals = guest_goals THEN 1  
+       ELSE 0  
+            END        ) AS num_points  
+FROM Matches  
+GROUP BY host_team  
+UNION ALL  
+SELECT guest_team, SUM(CASE  
+       WHEN host_goals < guest_goals THEN 3  
+       WHEN host_goals = guest_goals THEN 1  
+       ELSE 0  
+            END        ) AS num_points  
+FROM Matches  
+GROUP BY guest_team) AS u ON u.host_team = t.team_id  
+GROUP BY team_id  
+ORDER BY num_points DESC, team_id ASC ;  

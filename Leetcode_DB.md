@@ -240,3 +240,11 @@ FROM Matches
 GROUP BY guest_team) AS u ON u.host_team = t.team_id  
 GROUP BY team_id  
 ORDER BY num_points DESC, team_id ASC ;  
+  
+**Exercise 25 626. Exchange Seats**   
+select s1.id, s2.student      
+from seat s1, seat s2  
+where (s1.id % 2 = 1 AND if(s1.id +1 > (select max(id) from seat),s1.id = s2.id,s1.id +1 = s2.id)) OR (s1.id %2 =0 AND s1.id -1= s2.id)  
+ORDER BY s1.id   
+  
+**

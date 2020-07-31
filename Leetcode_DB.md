@@ -247,4 +247,21 @@ from seat s1, seat s2
 where (s1.id % 2 = 1 AND if(s1.id +1 > (select max(id) from seat),s1.id = s2.id,s1.id +1 = s2.id)) OR (s1.id %2 =0 AND s1.id -1= s2.id)  
 ORDER BY s1.id   
   
-**
+**Exercise 26 1098. Unpopular Books**
+select book_id, name
+from books
+where available_from <'2019-05-23'
+and book_id not in
+(select book_id 
+from orders 
+where dispatch_date>'2018-06-23'
+group by book_id
+having sum(quantity)>=10)
+
+**Exercise 27 601. Human Traffic of Stadium**  
+select s1.id,s1.visit_date,s1.people from stadium s1, stadium s2, stadium s3 where s1.id=s2.id-1 and s2.id=s3.id-1 and s1.people>=100 and s2.people>=100 and s3.people>=100  
+union  
+select s2.id,s2.visit_date,s2.people from stadium s1, stadium s2, stadium s3 where s1.id=s2.id-1 and s2.id=s3.id-1 and s1.people>=100 and s2.people>=100 and s3.people>=100  
+union  
+select s3.id,s3.visit_date,s3.people from stadium s1, stadium s2, stadium s3 where s1.id=s2.id-1 and s2.id=s3.id-1 and s1.people>=100 and s2.people>=100 and s3.people>=100  
+order by id  

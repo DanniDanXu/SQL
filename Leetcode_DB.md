@@ -265,3 +265,43 @@ select s2.id,s2.visit_date,s2.people from stadium s1, stadium s2, stadium s3 whe
 union  
 select s3.id,s3.visit_date,s3.people from stadium s1, stadium s2, stadium s3 where s1.id=s2.id-1 and s2.id=s3.id-1 and s1.people>=100 and s2.people>=100 and s3.people>=100  
 order by id  
+
+**Exercise 28 1350. Students With Invalid Departments**  
+SELECT s.id, s.name  
+FROM Students s  
+LEFT JOIN Departments d ON d.id = s.department_id  
+WHERE d.name IS NULL  
+  
+**Exercise 29 603. Consecutive Available Seats**  
+SELECT c1.seat_id  
+FROM cinema c1, cinema c2  
+WHERE c1.free = 1 AND C2.free = 1 AND c1.seat_id + 1 = c2.seat_id   
+UNION    
+SELECT c2.seat_id  
+FROM cinema c1, cinema c2  
+WHERE c1.free = 1 AND C2.free = 1 AND c1.seat_id + 1 = c2.seat_id   
+ORDER BY seat_id  
+  
+**Exercise 30 1341. Movie Rating**  
+SELECT name AS results  
+FROM (SELECT name,  c  
+FROM Users u, (SELECT user_id,COUNT(movie_id) as c FROM Movie_Rating GROUP BY user_id)  AS n  
+WHERE u.user_id =  n.user_id  
+ORDER BY c DESC, name LIMIT 1) AS f  
+UNION  
+SELECT title AS results  
+FROM (SELECT title, AVG(rating) as t   
+FROM Movies m   
+JOIN Movie_Rating mr ON m.movie_id = mr.movie_id  
+WHERE MONTH(created_at) = 02 AND YEAR(created_at) =  2020   
+GROUP BY mr.movie_id  
+ORDER BY t DESC, title  
+LIMIT 1 ) h  
+
+**Exercise 31 1132. Reported Posts II** 
+select round(avg(z.p),2) as average_daily_percent
+from
+(select (count(distinct r.post_id) *100/ count(distinct a.post_id) ) as P
+from actions a left join removals r on a.post_id = r.post_id
+where a.extra = 'spam'
+group by a.action_date )Z

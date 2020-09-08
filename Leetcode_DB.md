@@ -305,3 +305,28 @@ from
 from actions a left join removals r on a.post_id = r.post_id
 where a.extra = 'spam'
 group by a.action_date )Z
+  
+**Exercise 32 615. Average Salary: Departments VS Company**  
+SELECT C.pay_Month, D.department_id, CASE   
+                                    WHEN C_Avg < D_Avg THEN 'higher'  
+                                    WHEN C_Avg > D_Avg THEN 'lower'  
+                                    ELSE 'same'  
+                                 END AS comparison  
+FROM (SELECT AVG(amount) as C_Avg, SUBSTRING(pay_date,1,7) AS pay_month  
+FROM salary  
+GROUP BY MONTH(pay_date)) AS C  
+JOIN   
+(SELECT department_id,AVG(amount) as D_Avg, SUBSTRING(pay_date,1,7) AS pay_month  
+FROM salary s  
+JOIN employee e ON e.employee_id = s.employee_id  
+GROUP BY department_id,MONTH(pay_date)) AS D  
+ON D.pay_month = C.pay_month  
+  
+**Exercise 33 1142. User Activity for the Past 30 Days II**  
+SELECT IFNULL(ROUND(COUNT(user_id)/COUNT(DISTINCT(user_id)),2),0) AS average_sessions_per_user   
+FROM (SELECT user_id  
+FROM Activity  
+WHERE DATE_ADD(activity_date, INTERVAL 30 DAY)  > '2019-07-27'  
+GROUP BY session_id) AS C  
+  
+**

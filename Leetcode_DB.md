@@ -329,4 +329,8 @@ FROM Activity
 WHERE DATE_ADD(activity_date, INTERVAL 30 DAY)  > '2019-07-27'  
 GROUP BY session_id) AS C  
   
-**
+**Exercise 34 1173. Immdediate Food DeliveryI**  
+SELECT ROUND((im/COUNT(delivery_id))*100,2) AS immediate_percentage  
+FROM Delivery, (SELECT COUNT(delivery_id) AS im  
+FROM Delivery  
+WHERE order_date = customer_pref_delivery_date) AS i  

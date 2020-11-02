@@ -334,3 +334,23 @@ SELECT ROUND((im/COUNT(delivery_id))*100,2) AS immediate_percentage
 FROM Delivery, (SELECT COUNT(delivery_id) AS im  
 FROM Delivery  
 WHERE order_date = customer_pref_delivery_date) AS i  
+  
+**Exercise 35 1355. Activity Participants**  
+WITH CTE AS (SELECT activity, COUNT(activity) AS ct  
+FROM Friends  
+GROUP BY activity)   
+  
+SELECT activity   
+FROM CTE  
+WHERE ct < (SELECT MAX(ct) FROM CTE) AND ct > (SELECT MIN(ct) FROM CTE)  
+  
+**Exercise 36 1517.Find Users With Valid E-Mails**  
+SELECT * FROM Users WHERE REGEXP_LIKE(mail, '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com')  
+  
+**Exercise 37 627.Swap Salary**  
+UPDATE salary  
+SET  
+    sex = CASE sex  
+        WHEN 'm' THEN 'f'  
+        ELSE 'm'  
+    END;  
